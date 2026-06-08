@@ -30,7 +30,16 @@
         .page-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .nav-link { cursor: pointer; }
-        .project-img { height: 250px; object-fit: cover; width: 100%; }
+        
+        /* ĐÃ SỬA: Giúp hình ảnh dự án hiển thị nguyên vẹn 100% */
+        .project-img { 
+            width: 100%; 
+            height: 100%; 
+            min-height: 350px;
+            object-fit: contain; /* Thuộc tính thu nhỏ hình để vừa vặn khung */
+            padding: 1rem;       /* Tạo khoảng trống nhẹ xung quanh để hình không bị sát lề */
+            background-color: #f8f9fa; /* Màu nền xám nhạt để làm nổi bật hình */
+        }
     </style>
 </head>
 <body class="d-flex flex-column h-100 bg-light">
