@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Portfolio Nguyễn Trọng Tín - Chuyên viên Logistics, SCM & Quản lý Kho" />
+    <meta name="author" content="Nguyễn Trọng Tín" />
+    <title>Nguyễn Trọng Tín - Portfolio</title>
+    <!-- Custom Google font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .text-gradient {
+            background: linear-gradient(315deg, #1e30f3 0%, #e21e80 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .bg-gradient-primary-to-secondary {
+            background: linear-gradient(315deg, #1e30f3 0%, #e21e80 100%) !important;
+        }
+        .profile-img { max-width: 100%; border-radius: 2rem; box-shadow: 0 1rem 3rem rgba(0,0,0,0.15); object-fit: cover;}
+        /* Ẩn các section không active */
+        .page-section { display: none; animation: fadeIn 0.5s; }
+        .page-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .nav-link { cursor: pointer; }
+        .project-img { height: 250px; object-fit: cover; width: 100%; }
+    </style>
+</head>
+<body class="d-flex flex-column h-100 bg-light">
+    <main class="flex-shrink-0">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white py-3 shadow-sm sticky-top">
+            <div class="container px-5">
+                <a class="navbar-brand" onclick="showPage('home')" style="cursor: pointer;">
+                    <span class="fw-bolder text-primary">Tín Nguyễn.</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 small fw-bolder">
+                        <li class="nav-item"><a class="nav-link" onclick="showPage('home')">Trang chủ</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="showPage('resume')">Kinh nghiệm (CV)</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="showPage('projects')">Dự án</a></li>
+                        <li class="nav-item"><a class="nav-link" onclick="showPage('contact')">Liên hệ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ==================== TRANG CHỦ ==================== -->
+        <div id="home" class="page-section active">
+            <header class="py-5">
+                <div class="container px-5 pb-5">
+                    <div class="row gx-5 align-items-center">
+                        <div class="col-xxl-5">
+                            <div class="text-center text-xxl-start">
+                                <div class="badge bg-gradient-primary-to-secondary text-white mb-4">
+                                    <div class="text-uppercase">Logistics &middot; Smart Warehouse &middot; Tech-Driven</div>
+                                </div>
+                                <div class="fs-3 fw-light text-muted">Xin chào, tôi là</div>
+                                <h1 class="display-3 fw-bolder mb-3"><span class="text-gradient d-inline">Nguyễn Trọng Tín</span></h1>
+                                <p class="lead fw-normal text-muted mb-5">
+                                    Cử nhân Logistics & SCM (Đại học Hoa Sen). Chuyên môn vững vàng trong quản lý kho bãi, điều phối vật tư, kết hợp khả năng ứng dụng công nghệ (ERP, AI, số hóa quy trình) để tối ưu hóa chuỗi cung ứng.
+                                </p>
+                                <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xxl-start mb-3">
+                                    <a class="btn btn-primary btn-lg px-5 py-3 me-sm-3 fs-6 fw-bolder" onclick="showPage('resume')">Xem Hồ Sơ</a>
+                                    <a class="btn btn-outline-dark btn-lg px-5 py-3 fs-6 fw-bolder" onclick="showPage('projects')">Dự án thực tế</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xxl-7">
+                            <div class="d-flex justify-content-center mt-5 mt-xxl-0">
+                                <div class="profile">
+                                    <!-- HÌNH CHÂN DUNG CỦA ANH TÍN -->
+                                    <img class="profile-img" src="DSC_0004 copy.jpg" alt="Nguyễn Trọng Tín" style="max-height: 500px;" onerror="this.src='https://dummyimage.com/400x500/dee2e6/6c757d.jpg&text=Avatar'"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- About Section -->
+            <section class="bg-white py-5">
+                <div class="container px-5">
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-xxl-8">
+                            <div class="text-center my-5">
+                                <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">Mục tiêu nghề nghiệp</span></h2>
+                                <p class="lead fw-light mb-4">"Vận hành tinh gọn - Dữ liệu minh bạch"</p>
+                                <p class="text-muted">
+                                    <strong>Ngắn hạn:</strong> Áp dụng kỹ năng quản lý kho để đảm bảo quy trình nhập – xuất – tồn chính xác, phối hợp hiệu quả với các phòng ban và hoàn thành xuất sắc nhiệm vụ được giao.<br><br>
+                                    <strong>Dài hạn:</strong> Phát triển thành chuyên gia quản lý kho / giám sát logistics. Ứng dụng công nghệ và dữ liệu để đóng góp vào hệ thống vận hành kho bãi thông minh (Smart Warehouse) và bền vững cho doanh nghiệp.
+                                </p>
+                                <div class="d-flex justify-content-center fs-2 gap-4 mt-4">
+                                    <a class="text-gradient" href="mailto:tinnguyen150902@gmail.com"><i class="bi bi-envelope"></i></a>
+                                    <a class="text-gradient" href="tel:0989017917"><i class="bi bi-telephone"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== CV / KINH NGHIỆM ==================== -->
+        <div id="resume" class="page-section">
+            <div class="container px-5 my-5">
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Kinh Nghiệm & Kỹ Năng</span></h1>
+                </div>
+                <div class="row gx-5 justify-content-center">
+                    <div class="col-lg-11 col-xl-9 col-xxl-8">
+                        
+                        <!-- Kinh nghiệm -->
+                        <section>
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h2 class="text-primary fw-bolder mb-0">Kinh nghiệm làm việc</h2>
+                            </div>
+                            
+                            <!-- Cty Lục Giác -->
+                            <div class="card shadow border-0 rounded-4 mb-4">
+                                <div class="card-body p-5">
+                                    <div class="row align-items-center gx-5">
+                                        <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                            <div class="bg-light p-4 rounded-4">
+                                                <div class="text-primary fw-bolder mb-2">2025 - Hiện tại</div>
+                                                <div class="small fw-bolder">Thủ kho</div>
+                                                <div class="small text-muted">CTY CP THIẾT KẾ LỤC GIÁC</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <ul class="mb-0 text-muted">
+                                                <li>Kiểm soát số lượng vật tư phụ và vật tư chính của xưởng. Đảm bảo sản xuất luôn có vật tư, giảm thiểu trường hợp phát sinh gấp không có kế hoạch.</li>
+                                                <li>Kiểm soát luồng công cụ dụng cụ và vật tư thợ mang đi phòng hờ. Đảm bảo nắm rõ thiết bị ai đang giữ, máy móc trong tình trạng sẵn sàng.</li>
+                                                <li>Tiếp nhận và xử lý thông tin thi công chính xác.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Toplist Global -->
+                            <div class="card shadow border-0 rounded-4 mb-4">
+                                <div class="card-body p-5">
+                                    <div class="row align-items-center gx-5">
+                                        <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                            <div class="bg-light p-4 rounded-4">
+                                                <div class="text-primary fw-bolder mb-2">05/2024 - 02/2025</div>
+                                                <div class="small fw-bolder">Trợ lý giám đốc</div>
+                                                <div class="small text-muted">CTY TNHH TOPLIST GLOBAL</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <ul class="mb-0 text-muted">
+                                                <li>Theo dõi tiến độ và chất lượng sản phẩm thiết kế đúng kế hoạch cho đơn hàng sự kiện.</li>
+                                                <li>Làm việc với nhà cung cấp, giám sát sản xuất & kiểm tra chất lượng thực tế (màu sắc, kích thước, vật liệu).</li>
+                                                <li>Tổng hợp và đề xuất chi phí liên quan đơn hàng (nhân sự, vật tư thi công) gửi Giám đốc xét duyệt.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Minh Nguyên -->
+                            <div class="card shadow border-0 rounded-4 mb-5">
+                                <div class="card-body p-5">
+                                    <div class="row align-items-center gx-5">
+                                        <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                            <div class="bg-light p-4 rounded-4">
+                                                <div class="text-primary fw-bolder mb-2">2020 - 2025</div>
+                                                <div class="small fw-bolder">Giám sát, Thủ kho, Trưởng phòng thu mua</div>
+                                                <div class="small text-muted">CÔNG TY ĐẦU TƯ MINH NGUYÊN</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <ul class="mb-0 text-muted">
+                                                <li>Quản lý và điều phối đội thợ thi công, đảm bảo tiến độ và chất lượng.</li>
+                                                <li>Điều phối vật tư cho các công trình. Đặt hàng nhà cung cấp theo yêu cầu.</li>
+                                                <li>Đảm bảo quy trình thi công đúng kế hoạch, giảm thiểu sai sót & chi phí phát sinh. Thực hiện bảo trì.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Học vấn -->
+                        <section>
+                            <h2 class="text-secondary fw-bolder mb-4">Học vấn & Chứng chỉ</h2>
+                            <div class="card shadow border-0 rounded-4 mb-5">
+                                <div class="card-body p-5">
+                                    <div class="row align-items-center gx-5">
+                                        <div class="col text-center text-lg-start mb-4 mb-lg-0">
+                                            <div class="bg-light p-4 rounded-4">
+                                                <div class="text-secondary fw-bolder mb-2">2020 - 2025</div>
+                                                <div class="mb-2">
+                                                    <div class="small fw-bolder">Đại học Hoa Sen</div>
+                                                </div>
+                                                <div class="fst-italic">
+                                                    <div class="small text-muted">Cử nhân</div>
+                                                    <div class="small text-muted">Logistics & SCM (Quản trị Chuỗi cung ứng)</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8">
+                                            <div class="mb-2"><strong>Chứng chỉ & Đào tạo ngắn hạn:</strong></div>
+                                            <ul class="text-muted">
+                                                <li>TOEIC: 535 điểm (IIG Việt Nam, 2025)</li>
+                                                <li>Chứng nhận Giám sát thi công công trình cấp 4 (2023)</li>
+                                                <li>Chứng nhận Thi công và giám sát thi công trên cao (2023)</li>
+                                                <li>Kiến thức về mạch điện, linh kiện (PCB, Diode, cuộn cảm...)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Kỹ năng -->
+                        <section>
+                            <div class="card shadow border-0 rounded-4 mb-5">
+                                <div class="card-body p-5">
+                                    <div class="mb-4">
+                                        <div class="d-flex align-items-center mb-4">
+                                            <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3"><i class="bi bi-tools"></i></div>
+                                            <h3 class="fw-bolder mb-0"><span class="text-gradient d-inline">Kỹ năng chuyên môn</span></h3>
+                                        </div>
+                                        <div class="row row-cols-1 row-cols-md-3 mb-4">
+                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100 fw-bold">Quản lý & Vận hành Kho</div></div>
+                                            <div class="col mb-4 mb-md-0"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100 fw-bold">Điều phối & Thu mua Vật tư</div></div>
+                                            <div class="col"><div class="d-flex align-items-center bg-light rounded-4 p-3 h-100 fw-bold">Giám sát chất lượng (QA/QC)</div></div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-0">
+                                        <div class="d-flex align-items-center mb-4">
+                                            <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 me-3"><i class="bi bi-laptop"></i></div>
+                                            <h3 class="fw-bolder mb-0"><span class="text-gradient d-inline">Công cụ Số & Công nghệ</span></h3>
+                                        </div>
+                                        <div class="row row-cols-1 row-cols-md-2 g-3">
+                                            <div class="col"><div class="bg-light rounded-4 p-3 h-100">
+                                                <strong>Phần mềm Kho:</strong> ERP, Misa, Kiotviet
+                                            </div></div>
+                                            <div class="col"><div class="bg-light rounded-4 p-3 h-100">
+                                                <strong>Trí tuệ nhân tạo (AI):</strong> Ứng dụng Codex, OpenClaw, hệ thống Mina, Kho-bot để tự động hóa công việc.
+                                            </div></div>
+                                            <div class="col"><div class="bg-light rounded-4 p-3 h-100">
+                                                <strong>Phân tích dữ liệu:</strong> Đọc hiểu và nhận diện câu chuyện từ Data (Data Storytelling).
+                                            </div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== DỰ ÁN ==================== -->
+        <div id="projects" class="page-section">
+            <section class="py-5">
+                <div class="container px-5 mb-5">
+                    <div class="text-center mb-5">
+                        <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Dự Án Nổi Bật</span></h1>
+                        <p class="text-muted mt-2">Áp dụng kiến thức SCM và Công nghệ vào thực tiễn</p>
+                    </div>
+                    <div class="row gx-5 justify-content-center">
+                        <div class="col-lg-11 col-xl-9 col-xxl-8">
+                            
+                            <!-- Dự án 1: Mina Smart Factory -->
+                            <div class="card overflow-hidden shadow rounded-4 border-primary mb-5">
+                                <div class="card-body p-0">
+                                    <div class="row g-0">
+                                        <div class="col-md-7 p-5">
+                                            <div class="badge bg-primary text-white mb-2">Tự động hóa Kho bãi</div>
+                                            <h2 class="fw-bolder text-primary">Kho Tự Phục Vụ (POUS) & Hệ thống Mina</h2>
+                                            <p class="text-muted mt-3 mb-4">
+                                                Xây dựng hệ thống quản lý kho thông minh (WMS) giải quyết triệt để vấn đề hao hụt vật tư và thời gian chết tại xưởng:
+                                            </p>
+                                            <ul class="text-muted small mb-4">
+                                                <li><strong>Kiến trúc hệ thống:</strong> Sử dụng Python, Web UI Flask, Google Sheets làm Database nội bộ.</li>
+                                                <li><strong>Tích hợp IoT:</strong> Máy quét RFID, thiết bị vân tay F18 để định danh nhân sự khi lấy vật tư.</li>
+                                                <li><strong>AI & Tự động hóa:</strong> Bot Telegram thông báo Real-time, tự động nhắc nhở trả dụng cụ, tính toán định mức (BOM) bằng AI.</li>
+                                                <li><strong>Thực thi Milk Run:</strong> Quy trình đối soát vật tư vỏ rỗng hàng loạt nhanh chóng.</li>
+                                                <li><strong>Tối ưu hóa năng suất:</strong> Tiết kiệm tối đa thời gian lãng phí cho thợ và nhân viên kho khi phải tìm kiếm vật tư.</li>
+                                            </ul>
+                                            <!-- NÚT BẤM MỞ FILE HTML MINA -->
+                                            <a href="hub_b_n_giao_mina_smart_factory (1).html" target="_blank" class="btn btn-primary rounded-pill px-4">
+                                                <i class="bi bi-play-circle me-1"></i> Xem & Tương tác Trình mô phỏng Hệ thống
+                                            </a>
+                                        </div>
+                                        <div class="col-md-5 d-flex align-items-center bg-light">
+                                            <!-- Slider chứa 2 hình ảnh hệ thống Kho -->
+                                            <div id="carouselMina" class="carousel slide w-100 h-100" data-bs-ride="carousel">
+                                                <div class="carousel-inner h-100">
+                                                    <div class="carousel-item active h-100">
+                                                        <img class="img-fluid project-img h-100" src="z7884321657412_001_691c7d6f3ef73dd67b85d4b1482dbe87.jpg" alt="Mina Web UI" onerror="this.src='https://dummyimage.com/400x500/343a40/6c757d'" style="object-position: top;"/>
+                                                    </div>
+                                                    <div class="carousel-item h-100">
+                                                        <img class="img-fluid project-img h-100" src="z7884321657412_000_cac832a9103b2d30d20315df30523241.jpg" alt="Mina Telegram Bot" onerror="this.src='https://dummyimage.com/400x500/343a40/6c757d'" style="object-position: top;"/>
+                                                    </div>
+                                                </div>
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#carouselMina" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(100%);"></span>
+                                                    <span class="visually-hidden">Previous</span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#carouselMina" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(100%);"></span>
+                                                    <span class="visually-hidden">Next</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dự án 2: Quản lý vật tư sự kiện Spotify -->
+                            <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                                <div class="card-body p-0">
+                                    <div class="row g-0">
+                                        <div class="col-md-5 d-flex align-items-center bg-light">
+                                            <img class="img-fluid project-img h-100" src="photo_2026-06-08_11-44-32.jpg" alt="Spotify Wrapped Truck" onerror="this.src='https://dummyimage.com/400x400/343a40/6c757d'"/>
+                                        </div>
+                                        <div class="col-md-7 p-5">
+                                            <div class="badge bg-secondary text-white mb-2">Điều phối & Giám sát</div>
+                                            <h2 class="fw-bolder">Quản lý Sản xuất & Vật tư Sự kiện (Toplist Global)</h2>
+                                            <p class="text-muted mt-3">
+                                                Trực tiếp quản lý và giám sát thi công các dự án sự kiện lớn ngoài trời, điển hình như dự án quảng bá của các nhãn hàng.
+                                            </p>
+                                            <ul class="text-muted small">
+                                                <li>Phân tích kích thước thực tế (Scouting dimensions) từ nhà cung cấp để lên phương án thi công (VD: Truck wrap).</li>
+                                                <li>Kiểm soát ngân sách, điều phối vật liệu thi công (decal, thiết bị, ánh sáng).</li>
+                                                <li>Đảm bảo QA/QC chất lượng màu sắc, vật liệu đầu ra khớp 100% với bản thiết kế.</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Dự án 3: Booth sự kiện -->
+                            <div class="card overflow-hidden shadow rounded-4 border-0">
+                                <div class="card-body p-0">
+                                    <div class="row g-0">
+                                        <div class="col-md-7 p-5">
+                                            <div class="badge bg-secondary text-white mb-2">Giám sát Thi công</div>
+                                            <h2 class="fw-bolder">Lắp đặt & Vận hành Booth Sự Kiện</h2>
+                                            <p class="text-muted mt-3">
+                                                Triển khai lắp đặt trọn gói hệ thống gian hàng sự kiện ngoài trời, đảm bảo an toàn kỹ thuật điện và kết cấu.
+                                            </p>
+                                            <ul class="text-muted small">
+                                                <li>Quản lý nhóm thợ thi công lắp đặt tại hiện trường, tuân thủ nghiêm ngặt tiến độ.</li>
+                                                <li>Ứng dụng kiến thức chuyên môn về mạch điện, đi dây an toàn tại các cụm trải nghiệm cho người dùng.</li>
+                                                <li>Xử lý sự cố vật tư phát sinh ngay tại hiện trường.</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-5 d-flex align-items-center bg-light">
+                                            <img class="img-fluid project-img h-100" src="photo_2026-06-08_11-44-22.jpg" alt="Event Booth Setup" onerror="this.src='https://dummyimage.com/400x400/343a40/6c757d'"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ==================== LIÊN HỆ ==================== -->
+        <div id="contact" class="page-section">
+            <section class="py-5">
+                <div class="container px-5">
+                    <div class="bg-light rounded-4 py-5 px-4 px-md-5 shadow-sm">
+                        <div class="text-center mb-5">
+                            <div class="feature bg-primary bg-gradient-primary-to-secondary text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+                            <h1 class="fw-bolder">Kết nối với tôi</h1>
+                            <p class="lead fw-normal text-muted mb-0">Rất mong được hợp tác và đóng góp cho doanh nghiệp!</p>
+                        </div>
+                        <div class="row gx-5 justify-content-center">
+                            <div class="col-lg-8 col-xl-6">
+                                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                                    <div class="card-body p-4 text-center">
+                                        <h5 class="fw-bold"><i class="bi bi-telephone text-primary me-2"></i> Điện thoại</h5>
+                                        <p class="text-muted mb-0">0989 017 917</p>
+                                    </div>
+                                </div>
+                                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                                    <div class="card-body p-4 text-center">
+                                        <h5 class="fw-bold"><i class="bi bi-envelope-paper text-primary me-2"></i> Email</h5>
+                                        <p class="text-muted mb-0">tinnguyen150902@gmail.com</p>
+                                    </div>
+                                </div>
+                                <div class="card border-0 shadow-sm rounded-4 mb-4">
+                                    <div class="card-body p-4 text-center">
+                                        <h5 class="fw-bold"><i class="bi bi-geo-alt text-primary me-2"></i> Địa chỉ</h5>
+                                        <p class="text-muted mb-0">Quận Gò Vấp, Tp. Hồ Chí Minh</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer-->
+    <footer class="bg-white py-4 mt-auto border-top">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0 text-muted">Copyright &copy; Trọng Tín Portfolio 2026</div></div>
+                <div class="col-auto">
+                    <a class="small text-muted" onclick="showPage('home')" style="cursor: pointer;">Trang chủ</a>
+                    <span class="mx-1">&middot;</span>
+                    <a class="small text-muted" href="mailto:tinnguyen150902@gmail.com">Email</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script chuyển trang nội bộ -->
+    <script>
+        function showPage(pageId) {
+            // Ẩn tất cả các trang
+            document.querySelectorAll('.page-section').forEach(function(section) {
+                section.classList.remove('active');
+            });
+            // Hiển thị trang được chọn
+            document.getElementById(pageId).classList.add('active');
+            
+            // Cuộn lên đầu trang
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>

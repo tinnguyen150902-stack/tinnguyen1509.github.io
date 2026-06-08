@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="vi" class="h-full bg-slate-900">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hồ Sơ Bàn Giao: Kho Tự Phục Vụ POUS & Hệ Thống Mina</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes pulse-emerald { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .4; transform: scale(1.1); } }
+        .pulse-active { animation: pulse-emerald 2s infinite; }
+        @keyframes scanline { 0% { top: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        .animate-scan { position: absolute; left: 0; width: 100%; height: 4px; background: #34d399; box-shadow: 0 0 10px #34d399; animation: scanline 1.5s ease-in-out infinite; z-index: 10; }
+        .animate-fadeIn { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Custom styles cho phần IT handover */
+        .it-table th { background: rgba(30, 41, 59, 0.8); padding: 12px; text-align: left; font-size: 13px; font-weight: 700; color: #94a3b8; border-bottom: 1px solid #334155; }
+        .it-table td { padding: 12px; font-size: 13px; color: #cbd5e1; border-bottom: 1px solid rgba(51, 65, 85, 0.5); vertical-align: top; }
+        .it-table tr:hover td { background: rgba(51, 65, 85, 0.3); }
+        .it-code { background: #0f172a; padding: 2px 6px; border-radius: 4px; border: 1px solid #1e293b; color: #60a5fa; font-family: monospace; font-size: 12px; }
+        
+        /* Styled cho nội dung AI sinh ra */
+        .ai-content p { margin-bottom: 0.75em; line-height: 1.6; }
+        .ai-content ul { list-style-type: disc; padding-left: 1.5em; margin-bottom: 1em; }
+        .ai-content li { margin-bottom: 0.25em; }
+        .ai-content h4 { color: #c084fc; font-weight: bold; margin-top: 1em; margin-bottom: 0.5em; }
+        .ai-content code { background-color: rgba(0,0,0,0.3); padding: 2px 4px; border-radius: 4px; color: #93c5fd; font-family: monospace; }
+        .ai-content pre { background-color: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; overflow-x: auto; margin-top: 0.5em; margin-bottom: 1em; border: 1px solid #334155; }
+        .ai-content pre code { background-color: transparent; padding: 0; border-radius: 0; color: #e2e8f0; }
+    </style>
+</head>
+<body class="h-full text-slate-100 flex flex-col overflow-hidden selection:bg-emerald-500/30">
+
+    <!-- HEADER & NAVIGATION -->
+    <header class="glass sticky top-0 z-50 flex flex-col sm:flex-row items-center justify-between px-6 py-4 border-b border-slate-800 shrink-0 gap-4">
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+            <div class="h-12 w-12 rounded-xl bg-gradient-to-tr from-emerald-500 to-blue-500 flex items-center justify-center shadow-lg shadow-emerald-500/20 shrink-0">
+                <i class="fa-solid fa-boxes-packing text-slate-900 text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-base font-bold tracking-tight text-white uppercase sm:text-lg flex items-center gap-2">
+                    Hồ Sơ Bàn Giao: Hệ thống Mina & POUS
+                </h1>
+                <p class="text-[11px] sm:text-xs text-slate-400">Tài liệu tương tác dành cho Ban Giám Đốc (BOD) & Khối IT (Powered by Gemini AI)</p>
+            </div>
+        </div>
+        
+        <nav class="flex space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800 overflow-x-auto hide-scrollbar w-full sm:w-auto">
+            <button onclick="switchTab('pitch')" id="btn-tab-pitch" class="tab-btn whitespace-nowrap px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-emerald-500 text-slate-950 shadow transition-all duration-200">
+                <i class="fa-solid fa-person-chalkboard mr-2"></i>Slide Đề Xuất
+            </button>
+            <button onclick="switchTab('simulator')" id="btn-tab-simulator" class="tab-btn whitespace-nowrap px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition-all duration-200">
+                <i class="fa-solid fa-gamepad mr-2"></i>Trình Mô Phỏng
+            </button>
+            <button onclick="switchTab('roi')" id="btn-tab-roi" class="tab-btn whitespace-nowrap px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition-all duration-200">
+                <i class="fa-solid fa-calculator mr-2"></i>Tính Toán ROI
+            </button>
+            <button onclick="switchTab('it')" id="btn-tab-it" class="tab-btn whitespace-nowrap px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-blue-400 hover:text-blue-300 transition-all duration-200 relative overflow-hidden">
+                <i class="fa-solid fa-server mr-2 relative z-10"></i><span class="relative z-10">Bàn Giao IT (Mina)</span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 bg-slate-950 hide-scrollbar scroll-smooth">
+        
+        <!-- ==================== TAB 1: PITCH DECK SLIDES (BOD) ==================== -->
+        <div id="tab-pitch" class="tab-content block max-w-5xl mx-auto animate-fadeIn">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-presentation-screen text-emerald-400"></i>
+                    Bản Trình Bày Ban Giám Đốc (POSM Smart Factory)
+                </h2>
+            </div>
+            <div class="relative glass rounded-3xl p-6 sm:p-10 min-h-[530px] flex flex-col justify-between overflow-hidden shadow-2xl shadow-slate-950/50 border border-slate-800">
+                <div class="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-emerald-500/10 blur-[100px] pointer-events-none"></div>
+                <div class="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-blue-500/10 blur-[100px] pointer-events-none"></div>
+
+                <div id="slide-content" class="transition-opacity duration-300 z-10 flex-1 flex flex-col justify-center"></div>
+
+                <div class="flex items-center justify-between pt-6 border-t border-slate-800/80 mt-8 z-10">
+                    <button onclick="prevSlide()" class="px-4 py-2 bg-slate-900 border border-slate-800 rounded-xl hover:bg-slate-800 transition text-sm font-medium flex items-center gap-2 text-slate-300">
+                        <i class="fa-solid fa-arrow-left"></i> Trang Trước
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <span id="slide-indicator" class="text-sm font-semibold text-emerald-400 bg-slate-900/80 border border-slate-800/50 px-3 py-1 rounded-full">Slide 1/5</span>
+                    </div>
+                    <button onclick="nextSlide()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 rounded-xl transition text-sm font-bold flex items-center gap-2 shadow-lg shadow-emerald-500/10">
+                        Trang Tiếp <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 2: INTERACTIVE SIMULATOR ==================== -->
+        <div id="tab-simulator" class="tab-content hidden max-w-6xl mx-auto animate-fadeIn">
+            <div class="glass border-l-4 border-emerald-500 rounded-2xl p-4 mb-6 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg">
+                <div class="flex items-start gap-3">
+                    <div class="h-10 w-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 shrink-0">
+                        <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-white">Chế độ vận hành của hệ thống Kho</h3>
+                        <p class="text-[11px] text-slate-400 leading-relaxed mt-1">Giai đoạn Pilot xưởng chưa có định mức BOM? Chuyển sang <strong>Gom dữ liệu</strong> để máy tự học. Khi đã có BOM, chuyển sang <strong>Chốt chặn cứng</strong> để siết lãng phí.</p>
+                    </div>
+                </div>
+                <div class="flex bg-slate-950 p-1 rounded-xl border border-slate-800 shrink-0 w-full md:w-auto">
+                    <button onclick="setBomMode('collect')" id="btn-mode-collect" class="flex-1 md:flex-none px-4 py-2 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 transition-all duration-200">
+                        <i class="fa-solid fa-chart-line mr-1.5"></i>Gom DL dựng BOM
+                    </button>
+                    <button onclick="setBomMode('strict')" id="btn-mode-strict" class="flex-1 md:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-400 hover:text-slate-200 transition-all duration-200">
+                        <i class="fa-solid fa-lock mr-1.5"></i>Chốt chặn cứng
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Left: Control Panels -->
+                <div class="lg:col-span-8 flex flex-col gap-6">
+                    
+                    <!-- PHASE 0 - TỦ LOCKER -->
+                    <div class="glass rounded-3xl p-6 border border-emerald-500/30 bg-slate-900/60 flex flex-col gap-4">
+                        <div class="flex justify-between items-center gap-2 flex-wrap">
+                            <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-vault text-emerald-400"></i> Phase 0: Tủ Locker Cá Nhân (Tạo thói quen)
+                            </h3>
+                            <div class="flex items-center gap-2 text-[10px] text-slate-400">
+                                <div class="flex items-center gap-1 bg-slate-950 px-2 py-1 rounded border border-slate-800">
+                                    <span>Tỷ lệ mang thẻ: </span><span id="habit-rate" class="font-bold text-emerald-400">33%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-2">
+                            <div id="locker-box-nam" class="border border-slate-800 rounded-2xl p-4 bg-slate-950/50 flex flex-col items-center justify-between gap-3 text-center transition-all duration-300">
+                                <div class="text-xs font-bold text-slate-400">Tủ 01: Anh Nam</div>
+                                <div id="locker-status-icon-nam" class="text-2xl text-slate-600"><i class="fa-solid fa-lock"></i></div>
+                                <button onclick="interactLocker('nam')" class="w-full py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-lg text-[10px] border border-slate-800 transition font-semibold">Quẹt thẻ mở tủ</button>
+                            </div>
+                            <div id="locker-box-bac" class="border border-slate-800 rounded-2xl p-4 bg-slate-950/50 flex flex-col items-center justify-between gap-3 text-center transition-all duration-300">
+                                <div class="text-xs font-bold text-slate-400">Tủ 02: Anh Bắc</div>
+                                <div id="locker-status-icon-bac" class="text-2xl text-slate-600"><i class="fa-solid fa-lock"></i></div>
+                                <button onclick="interactLocker('bac')" class="w-full py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-lg text-[10px] border border-slate-800 transition font-semibold">Quẹt thẻ mở tủ</button>
+                            </div>
+                            <div id="locker-box-hai" class="border border-slate-800 rounded-2xl p-4 bg-slate-950/50 flex flex-col items-center justify-between gap-3 text-center transition-all duration-300">
+                                <div class="text-xs font-bold text-slate-400">Tủ 03: Anh Hải</div>
+                                <div id="locker-status-icon-hai" class="text-2xl text-slate-600"><i class="fa-solid fa-lock"></i></div>
+                                <button onclick="interactLocker('hai')" class="w-full py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-300 rounded-lg text-[10px] border border-slate-800 transition font-semibold">Quẹt thẻ mở tủ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PHASE 1 - KỆ POUS LƯU ĐỘNG -->
+                    <div class="glass rounded-3xl p-6 border-2 border-slate-800 flex flex-col gap-6 relative overflow-hidden bg-slate-950/30">
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                            <div>
+                                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                                    <i class="fa-solid fa-gears text-emerald-400"></i> Trạm Kệ Kho Lưu Động POUS
+                                </h3>
+                                <p class="text-[11px] text-slate-400 mt-1">Chọn đồ ở GIỮA $\rightarrow$ Chạm RFID bên PHẢI $\rightarrow$ Quẹt F18 bên TRÁI $\rightarrow$ Thả rổ.</p>
+                            </div>
+                            <span id="system-mode-badge" class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-1 rounded-full font-bold animate-pulse hidden sm:inline-block">GOM DỮ LIỆU</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch">
+                            <!-- LEFT: F18 -->
+                            <div class="md:col-span-3 border border-slate-800/80 bg-slate-900/40 rounded-2xl p-3 flex flex-col items-center justify-between text-center relative">
+                                <div class="absolute top-2 right-2 text-[10px] text-slate-600 font-bold">BƯỚC 3</div>
+                                <div class="w-full text-[10px] text-slate-500 font-bold mb-2">F18 (TRÁI)</div>
+                                <div class="h-10 w-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-2 shrink-0"><i class="fa-solid fa-fingerprint text-lg"></i></div>
+                                
+                                <div class="w-full flex flex-col gap-1.5 mb-2 flex-1">
+                                    <button onclick="clickF18Swipe('nam')" id="f18-nam" class="py-1 px-1.5 bg-slate-900 border border-slate-700 hover:bg-slate-800 rounded text-[9px] text-slate-300 flex justify-between items-center"><span>Quẹt: Nam</span> <span class="badge-nam text-emerald-500">Nợ: 0</span></button>
+                                    <button onclick="clickF18Swipe('bac')" id="f18-bac" class="py-1 px-1.5 bg-slate-900 border border-slate-700 hover:bg-slate-800 rounded text-[9px] text-slate-300 flex justify-between items-center"><span>Quẹt: Bắc</span> <span class="badge-bac text-emerald-500">Nợ: 0</span></button>
+                                    <button onclick="clickF18Swipe('hai')" id="f18-hai" class="py-1 px-1.5 bg-slate-900 border border-slate-700 hover:bg-slate-800 rounded text-[9px] text-slate-300 flex justify-between items-center"><span>Quẹt: Hải</span> <span class="badge-hai text-emerald-500">Nợ: 0</span></button>
+                                </div>
+                                <div class="w-full bg-slate-950 py-1.5 px-1 rounded-lg border border-slate-800 text-[9px]" id="step-f18-indicator"><span class="text-slate-500 italic">Chờ chạm vật tư...</span></div>
+                            </div>
+
+                            <!-- CENTER: ITEMS & BASKET -->
+                            <div class="md:col-span-6 border-2 border-dashed border-slate-800 bg-slate-900/20 rounded-2xl p-3 flex flex-col justify-between">
+                                <div class="flex items-center justify-between text-[10px] text-slate-500 font-bold mb-2">
+                                    <span class="text-[10px] text-slate-600">B1 & B4</span><span class="tracking-widest">KỆ (GIỮA)</span><i class="fa-solid fa-boxes-stacked text-emerald-400"></i>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
+                                    <button onclick="clickSelectItem('cnc')" id="shelf-item-cnc" class="flex flex-col p-2 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 transition text-left relative overflow-hidden">
+                                        <span class="text-[10px] font-bold text-slate-300 relative z-10">Mũi CNC 6mm</span><span class="text-[8px] text-slate-500 relative z-10">Hộp nhựa 2 ngăn</span><i class="fa-solid fa-box absolute -right-2 -bottom-2 text-2xl text-slate-800 opacity-50 z-0"></i>
+                                    </button>
+                                    <button onclick="clickSelectItem('silicon')" id="shelf-item-silicon" class="flex flex-col p-2 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 transition text-left relative overflow-hidden">
+                                        <span class="text-[10px] font-bold text-slate-300 relative z-10">Súng Silicon</span><span class="text-[8px] text-slate-500 relative z-10">Kẹp bướm RFID</span><i class="fa-solid fa-paperclip absolute -right-2 -bottom-2 text-2xl text-slate-800 opacity-50 z-0"></i>
+                                    </button>
+                                </div>
+                                <div class="border border-slate-800 bg-slate-950 p-2.5 rounded-xl flex flex-col gap-2">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-[10px] font-bold text-rose-400"><i class="fa-solid fa-trash-can mr-1"></i>Rổ Thu Hồi</span>
+                                        <span class="text-[8px] bg-rose-500/10 text-rose-400 px-1.5 py-0.5 rounded-full" id="basket-count-badge">0 vỏ</span>
+                                    </div>
+                                    <div class="bg-slate-900/50 p-2 rounded-lg border border-slate-800 border-dashed text-center min-h-[40px] flex flex-wrap gap-1 items-center justify-center" id="shelf-basket-content">
+                                        <p class="text-[9px] text-slate-500 italic">Thả lại vỏ cũ vào đây.</p>
+                                    </div>
+                                    <button onclick="clickDropBasket()" id="shelf-btn-drop" disabled class="w-full py-1.5 bg-slate-800 text-slate-500 rounded-lg text-[10px] font-bold transition cursor-not-allowed">Thả Vỏ Cũ Vào Rổ</button>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT: RFID -->
+                            <div class="md:col-span-3 border border-slate-800/80 bg-slate-900/40 rounded-2xl p-3 flex flex-col justify-between items-center text-center relative">
+                                <div class="absolute top-2 left-2 text-[10px] text-slate-600 font-bold">BƯỚC 2</div>
+                                <div class="w-full flex items-center justify-end text-[10px] text-slate-500 font-bold mb-2">RFID (PHẢI)</div>
+                                <div class="h-10 w-10 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-2 shrink-0"><i class="fa-solid fa-scanner-image text-lg" id="rfid-scan-icon"></i></div>
+                                
+                                <div class="flex-1 w-full bg-slate-950 rounded-lg border border-slate-800 flex items-center justify-center mb-2 px-2 py-1"><span class="text-[9px] text-slate-500" id="rfid-status-text">Đợi lấy hàng...</span></div>
+                                <button onclick="clickTapMaterial()" id="shelf-btn-tap" disabled class="w-full py-1.5 bg-slate-800 text-slate-500 rounded-lg text-[10px] font-bold transition cursor-not-allowed">Chạm RFID</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KHO TỔNG: MILK RUN -->
+                    <div class="glass rounded-3xl p-6 border border-sky-500/30 bg-slate-900/60 flex flex-col gap-4 relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full bg-sky-500/10 blur-xl pointer-events-none"></div>
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <div>
+                                <h3 class="text-base font-bold text-white flex items-center gap-2"><i class="fa-solid fa-server text-sky-400"></i> Kho Tổng: Quét Đối Soát</h3>
+                                <p class="text-[11px] text-slate-400 mt-0.5">Software-Directed Milk Run: Quét 1 phát gạch nợ tự động.</p>
+                            </div>
+                            <div class="text-center bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+                                <span class="block text-[8px] text-slate-500 uppercase font-bold">Rổ Tạp vụ giao:</span>
+                                <span id="milkrun-count" class="font-black text-rose-400 text-lg">0</span> <span class="text-[10px] text-slate-400">vỏ</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                            <button onclick="runBulkMilkRun()" id="btn-milk-run" disabled class="w-full py-2.5 bg-slate-800 text-slate-500 rounded-xl font-bold text-xs transition cursor-not-allowed flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-dumpster"></i> Đổ ụp rổ lên Bàn quét RFID
+                            </button>
+                            <div class="h-20 w-full border-2 border-dashed border-sky-500/50 bg-sky-950/20 rounded-xl relative flex flex-wrap items-center justify-center p-2 gap-2 overflow-hidden" id="bulk-scanner-surface">
+                                <span class="text-[10px] text-sky-500/50 font-bold uppercase">Mặt Bàn Cảm Biến RFID</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Side: Stats, AI & Telegram -->
+                <div class="lg:col-span-4 flex flex-col gap-6">
+                    
+                    <!-- DIGITAL TWIN -->
+                    <div class="glass rounded-3xl p-5 border-2 border-emerald-500/30 flex flex-col gap-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5"><i class="fa-solid fa-users-viewfinder pulse-active"></i> Bản Sao Số Nhân Sự</h3>
+                            <span class="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-1.5 py-0.5 rounded-full">LIVE</span>
+                        </div>
+                        <div class="bg-slate-950 p-3 rounded-2xl border border-slate-800 flex flex-col gap-3">
+                            <div class="flex items-center justify-between border-b border-slate-900 pb-2">
+                                <div class="flex items-center gap-2"><div class="h-2 w-2 rounded-full bg-slate-600" id="twin-dot-nam"></div><div><h4 class="text-xs font-bold text-white">Nam</h4><p class="text-[9px] text-slate-500" id="twin-time-nam">Chưa Check-in</p></div></div><span id="twin-loc-nam" class="text-[9px] font-bold text-slate-500">Chưa xác định</span>
+                            </div>
+                            <div class="flex items-center justify-between border-b border-slate-900 pb-2">
+                                <div class="flex items-center gap-2"><div class="h-2 w-2 rounded-full bg-slate-600" id="twin-dot-bac"></div><div><h4 class="text-xs font-bold text-white">Bắc</h4><p class="text-[9px] text-slate-500" id="twin-time-bac">Chưa Check-in</p></div></div><span id="twin-loc-bac" class="text-[9px] font-bold text-slate-500">Chưa xác định</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2"><div class="h-2 w-2 rounded-full bg-slate-600" id="twin-dot-hai"></div><div><h4 class="text-xs font-bold text-white">Hải</h4><p class="text-[9px] text-slate-500" id="twin-time-hai">Chưa Check-in</p></div></div><span id="twin-loc-hai" class="text-[9px] font-bold text-slate-500">Chưa xác định</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI BOM ANALYZER (Gemini Powered) -->
+                    <div class="glass rounded-3xl p-5 border border-purple-500/40 flex flex-col gap-3 relative overflow-hidden bg-slate-900/80 shadow-lg shadow-purple-500/10">
+                        <div class="absolute -right-10 -top-10 w-24 h-24 rounded-full bg-purple-500/10 blur-xl pointer-events-none"></div>
+                        <div class="flex justify-between items-center z-10">
+                            <h3 class="text-xs font-bold uppercase text-purple-400 flex items-center gap-1.5">
+                                <i class="fa-solid fa-brain"></i> AI Phân Tích BOM (Định Mức)
+                            </h3>
+                        </div>
+                        <p class="text-[10px] text-slate-400 z-10">Dựa trên dữ liệu thu thập (Ai đã mượn gì), Gemini AI sẽ đề xuất định mức vật tư tối ưu nhất cho Xưởng.</p>
+                        
+                        <button onclick="analyzeBOMWithAI()" id="btn-ai-bom" class="w-full py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-[10px] font-bold transition flex justify-center items-center gap-2 shadow-md shadow-purple-500/30 z-10">
+                            ✨ Đề Xuất Định Mức Bằng AI
+                        </button>
+                        
+                        <div id="ai-bom-result" class="text-[11px] ai-content hidden p-3 bg-slate-950 rounded-xl border border-slate-800/80 z-10 mt-2 max-h-48 overflow-y-auto hide-scrollbar"></div>
+                    </div>
+
+                    <!-- TELEGRAM WEBHOOK -->
+                    <div class="glass rounded-[40px] p-3 border-4 border-slate-800 shadow-2xl relative w-full aspect-[9/15] flex flex-col bg-slate-950 overflow-hidden shrink-0 mx-auto max-w-[280px]">
+                        <div class="absolute top-4 left-1/2 -translate-x-1/2 h-4 w-20 bg-slate-800 rounded-full z-20"></div>
+                        <div class="pt-6 pb-2 px-4 flex items-center justify-between border-b border-slate-900"><span class="text-[10px] font-bold text-slate-400">08:00</span><div class="flex items-center gap-1.5 text-slate-400 text-[10px]"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-three-quarters"></i></div></div>
+                        <div class="flex-1 flex flex-col p-3 overflow-hidden">
+                            <div class="flex items-center gap-2 border-b border-slate-900 pb-2 mb-2"><div class="h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-[10px] text-white"><i class="fa-brands fa-telegram"></i></div><div><h4 class="text-[10px] font-bold text-white">Kho-bot Alert</h4></div></div>
+                            <div id="telegram-feed" class="flex-1 flex flex-col gap-2 overflow-y-auto hide-scrollbar text-[9px]"><div class="bg-slate-900 p-2 rounded-xl text-slate-400 italic">Mở tủ Locker hoặc tương tác trên kệ để xem cảnh báo Real-time!</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 3: ROI CALCULATOR ==================== -->
+        <div id="tab-roi" class="tab-content hidden max-w-5xl mx-auto animate-fadeIn">
+            <div class="glass rounded-3xl p-6 sm:p-10 border border-slate-800">
+                <h2 class="text-2xl font-bold text-white mb-2 flex items-center gap-2"><i class="fa-solid fa-money-bill-trend-up text-emerald-400"></i> Bảng Tính ROI (Hiệu Quả Đầu Tư)</h2>
+                <p class="text-sm text-slate-400 mb-8">Tính toán tiết kiệm từ việc chặn hao hụt vật tư và thời gian chết nhờ hệ thống POUS & Digital Twin.</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <div class="lg:col-span-7 flex flex-col gap-6">
+                        <div>
+                            <div class="flex items-center justify-between mb-2"><label class="text-sm font-semibold text-slate-200">Số lượng thợ tại xưởng (Người)</label><span id="val-workers" class="text-sm font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20">30</span></div>
+                            <input oninput="updateRoi()" type="range" id="input-workers" min="10" max="100" value="30" class="w-full accent-emerald-500 bg-slate-800 rounded-lg appearance-none h-2">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2"><label class="text-sm font-semibold text-slate-200">Lương trung bình (VNĐ/giờ)</label><span id="val-wage" class="text-sm font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20">45.000đ</span></div>
+                            <input oninput="updateRoi()" type="range" id="input-wage" min="25000" max="100000" step="5000" value="45000" class="w-full accent-emerald-500 bg-slate-800 rounded-lg appearance-none h-2">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2"><label class="text-sm font-semibold text-slate-200">Phút đi bộ la cà/lần lên kho</label><span id="val-walk" class="text-sm font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20">15 phút</span></div>
+                            <input oninput="updateRoi()" type="range" id="input-walk" min="5" max="30" value="15" class="w-full accent-emerald-500 bg-slate-800 rounded-lg appearance-none h-2">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2"><label class="text-sm font-semibold text-slate-200">Thời gian nhàn rỗi vô định/thợ/ngày</label><span id="val-idle" class="text-sm font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20">20 phút</span></div>
+                            <input oninput="updateRoi()" type="range" id="input-idle" min="0" max="60" value="20" class="w-full accent-emerald-500 bg-slate-800 rounded-lg appearance-none h-2">
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between mb-2"><label class="text-sm font-semibold text-slate-200">Chi phí hao mòn vật tư hiện tại (VND/tháng)</label><span id="val-waste-cost" class="text-sm font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-lg border border-emerald-500/20">30.000.000đ</span></div>
+                            <input oninput="updateRoi()" type="range" id="input-waste-cost" min="10000000" max="100000000" step="5000000" value="30000000" class="w-full accent-emerald-500 bg-slate-800 rounded-lg appearance-none h-2">
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-5 flex flex-col gap-4">
+                        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 flex flex-col gap-4">
+                            <h3 class="text-md font-bold text-white border-b border-slate-800 pb-2">HIỆU QUẢ TÀI CHÍNH / THÁNG</h3>
+                            <div class="flex justify-between items-center text-sm"><span class="text-slate-400">Tiết kiệm từ bớt đi lại:</span><span id="res-labor-savings" class="font-bold text-emerald-400">0đ</span></div>
+                            <div class="flex justify-between items-center text-sm"><span class="text-slate-400">Tối ưu giờ nhàn rỗi (Bản sao số):</span><span id="res-idle-savings" class="font-bold text-emerald-400">0đ</span></div>
+                            <div class="flex justify-between items-center text-sm"><span class="text-slate-400">Giảm hao hụt vật tư (25%):</span><span id="res-tool-savings" class="font-bold text-emerald-400">0đ</span></div>
+                            <div class="flex justify-between items-center text-sm border-t border-slate-800 border-dashed pt-2 mt-2"><span class="text-slate-400 italic text-[11px]">Trừ bồi dưỡng Tạp vụ đi Milk Run:</span><span class="font-bold text-rose-400 text-[11px]">- 2.000.000đ</span></div>
+                            <hr class="border-slate-800 my-2">
+                            <div class="flex justify-between items-end">
+                                <div><span class="text-xs text-slate-400 uppercase tracking-wider block">TỔNG TIẾT KIỆM RÒNG</span><span id="res-total-savings" class="text-2xl font-black text-emerald-400">0đ</span></div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-tr from-slate-900 to-slate-800 border border-slate-800 rounded-2xl p-6">
+                            <div class="flex items-center gap-3">
+                                <div class="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center text-blue-400 border border-blue-500/20"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                                <div><p class="text-xs text-slate-400 uppercase tracking-wider">Hoàn Vốn Dự Kiến (Pilot 9Tr)</p><p class="text-base font-extrabold text-white">Chỉ <span class="text-blue-400" id="res-payback">0.0</span> tháng!</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== TAB 4: BÀN GIAO IT (MINA SYSTEM) ==================== -->
+        <div id="tab-it" class="tab-content hidden max-w-6xl mx-auto animate-fadeIn space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end border-b border-slate-800 pb-4 gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                        <i class="fa-solid fa-code-branch text-blue-400"></i> Bàn Giao IT: Kiến trúc hệ thống Mina
+                    </h2>
+                    <p class="text-sm text-slate-400 mt-1">Tài liệu bàn giao nhanh cho đội tiếp quản vận hành kho Hexa (Source of truth: Mina. Không dùng n8n cho lõi)</p>
+                </div>
+                <div class="bg-blue-500/10 border border-blue-500/20 px-3 py-1.5 rounded-lg text-xs text-blue-300 font-mono flex items-center gap-2">
+                    <i class="fa-solid fa-folder-open"></i> workspace-mina/remote-control
+                </div>
+            </div>
+
+            <!-- Tổng quan -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                <div class="md:col-span-8 glass rounded-2xl p-6 border border-slate-800">
+                    <h3 class="text-lg font-bold text-white mb-3 border-b border-slate-800 pb-2">1. Tổng quan hệ thống</h3>
+                    <p class="text-sm text-slate-300 mb-4 leading-relaxed">
+                        <strong>Mina</strong> là hệ thống vận hành kho/WMS nội bộ của Hexa, xoay quanh Google Sheet <code class="it-code">KHO_HANG_SO</code>, Web UI, Telegram bot, scanner daemon và các service nghiệp vụ Python. Mina là <strong>source of truth</strong> cho nghiệp vụ kho. n8n nếu dùng chỉ đóng vai trò cảnh báo/điều phối, không giữ business logic lõi.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full text-xs font-semibold">Web UI Flask</span>
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full text-xs font-semibold">Telegram Bot</span>
+                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2.5 py-1 rounded-full text-xs font-semibold">Scanner Daemon</span>
+                        <span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2.5 py-1 rounded-full text-xs font-semibold">Google Sheets DB</span>
+                        <span class="bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-1 rounded-full text-xs font-semibold">PDF/In tem</span>
+                        <span class="bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-1 rounded-full text-xs font-semibold">n8n phụ trợ</span>
+                    </div>
+                </div>
+                <div class="md:col-span-4 bg-slate-900/80 rounded-2xl p-6 border border-slate-800">
+                    <h3 class="text-base font-bold text-white mb-3">Thông tin Server</h3>
+                    <ul class="space-y-2 text-xs text-slate-300 font-mono">
+                        <li class="flex gap-2"><i class="fa-solid fa-terminal text-slate-500 mt-0.5"></i> <span>Source: <br><span class="text-blue-300">C:\Users\tinng\.openclaw-sbdkho\workspace-mina</span></span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-server text-emerald-500 mt-0.5"></i> <span>Web/Bot: <span class="text-slate-100">remote-control/server.py</span></span></li>
+                        <li class="flex gap-2"><i class="fa-brands fa-telegram text-blue-500 mt-0.5"></i> <span>Bot: <span class="text-slate-100">telegram_bot.py</span></span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-barcode text-amber-500 mt-0.5"></i> <span>Scanner: <span class="text-slate-100">scanner_daemon.py</span></span></li>
+                        <li class="flex gap-2"><i class="fa-solid fa-network-wired text-purple-500 mt-0.5"></i> <span>Port: <span class="text-slate-100">5500</span></span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Các Module Nghiệp vụ -->
+            <div class="glass rounded-2xl border border-slate-800 overflow-hidden">
+                <div class="p-4 border-b border-slate-800 bg-slate-900/50">
+                    <h3 class="text-base font-bold text-white">2. Các Module / Thành phần chính</h3>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full it-table">
+                        <thead>
+                            <tr><th class="w-1/5">Thành phần</th><th class="w-2/5">Vai trò & Quy trình chuẩn</th><th class="w-1/5">File/Module liên quan</th><th class="w-1/5">Lưu ý IT</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="font-bold text-blue-300">Web UI / API</span></td>
+                                <td>Màn hình vận hành, dashboard, import, quản lý công trình, SX nội bộ.</td>
+                                <td><code class="it-code">server.py</code></td>
+                                <td>Chuẩn hóa start/stop, config.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-bold text-blue-300">Google Sheets Gateway</span></td>
+                                <td>Đọc/ghi data backbone: danh mục, phiếu, ledger, công trình.</td>
+                                <td><code class="it-code">project_sheet_gateway.py</code></td>
+                                <td>Cần service account/key & share quyền sheet.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-bold text-blue-300">Hanging Cost Ledger</span></td>
+                                <td>Ghi chi phí vật tư đang treo theo term/temp; settle sang CRM khi đã bind.</td>
+                                <td><code class="it-code">pickup_consumption_service.py</code></td>
+                                <td>Trạng thái OPEN/DONE. Chống double-run bằng <code class="it-code">settlement_batch_id</code>.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-bold text-blue-300">Project Bind</span></td>
+                                <td>Tạo công trình tạm, bind mã tạm/term $\rightarrow$ CRM, audit mapping.</td>
+                                <td><code class="it-code">project_registry_service.py</code></td>
+                                <td>Không rewrite lịch sử kho; dùng append/audit.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-bold text-blue-300">F18 / Dụng cụ</span></td>
+                                <td>Quản người giữ dụng cụ, mượn/trả, nhắc quá hạn.</td>
+                                <td><code class="it-code">f18_tool_lending_service.py</code></td>
+                                <td>Cần xác nhận người trả, không chỉ scan asset.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="font-bold text-blue-300">Cronjob / Báo cáo sáng</span></td>
+                                <td>Tổng hợp tự động mã tạm chờ CRM, vật tư chạm Min-stock, thiết bị F18 đến hạn kiểm tra. Đẩy qua Telegram lúc 8:00 AM.</td>
+                                <td><code class="it-code">n8n / telegram_bot.py</code></td>
+                                <td>Dashboard thu nhỏ, giúp BOD & IT nắm nút thắt kho.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Rủi Ro Kỹ Thuật (P0, P1) -->
+            <div class="glass rounded-2xl p-6 border border-slate-800">
+                <h3 class="text-lg font-bold text-rose-400 mb-4 border-b border-slate-800 pb-2"><i class="fa-solid fa-triangle-exclamation mr-2"></i>3. Rủi Ro Cần IT Xử Lý Ngay (Checklist Bàn Giao)</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- P0 -->
+                    <div class="bg-rose-500/10 border border-rose-500/30 p-4 rounded-xl flex flex-col gap-2">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-rose-600 text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide shadow-lg shadow-rose-500/20">P0 Khẩn cấp</span>
+                        </div>
+                        <h4 class="text-sm font-bold text-white">Hardcode Path & VENV</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">Đang fix cứng đường dẫn <code class="it-code">C:\Users\KHO HEXA\...</code> ở nhiều module. Yêu cầu chuyển sang biến môi trường (ENV) và tách runtime <code class="it-code">.venv</code> ra khỏi source tree (thêm vào gitignore).</p>
+                    </div>
+
+                    <!-- P1 - Collision -->
+                    <div class="bg-amber-500/10 border border-amber-500/30 p-4 rounded-xl flex flex-col gap-2">
+                        <div class="flex items-center justify-between">
+                            <span class="bg-amber-600 text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide shadow-lg shadow-amber-500/20">P1 Quan trọng</span>
+                        </div>
+                        <div class="pt-6 pb-2 px-4 flex items-center justify-between border-b border-slate-900"><span class="text-[10px] font-bold text-slate-400">08:00</span><div class="flex items-center gap-1.5 text-slate-400 text-[10px]"><i class="fa-solid fa-signal"></i><i class="fa-solid fa-wifi"></i><i class="fa-solid fa-battery-three-quarters"></i></div></div>
+                        <div class="flex-1 flex flex-col p-3 overflow-hidden">
+                            <div class="flex items-center justify-between border-b border-slate-900 pb-2 mb-2">
+                                <div class="flex items-center gap-2">
+                                    <div class="h-6 w-6 rounded-full bg-blue-500 flex items-center justify-center text-[10px] text-white"><i class="fa-brands fa-telegram"></i></div>
+                                    <div><h4 class="text-[10px] font-bold text-white">Kho-bot Alert</h4></div>
+                                </div>
+                                <button onclick="triggerDailyReport()" class="text-[8px] bg-blue-600 hover:bg-blue-500 text-white px-2 py-1 rounded transition shadow whitespace-nowrap"><i class="fa-solid fa-clock mr-1"></i>Test 8:00 AM</button>
+                            </div>
+                            <div id="telegram-feed" class="flex-1 flex flex-col gap-2 overflow-y-auto hide-scrollbar text-[9px]"><div class="bg-slate-900 p-2 rounded-xl text-slate-400 italic">Mở tủ Locker hoặc tương tác trên kệ để xem cảnh báo Real-time!</div></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- AI IT ASSISTANT -->
+                <div class="mt-6 bg-slate-900/80 border border-purple-500/40 rounded-xl p-6 relative overflow-hidden shadow-lg shadow-purple-500/10">
+                     <div class="absolute -left-10 -bottom-10 w-32 h-32 rounded-full bg-purple-500/10 blur-xl pointer-events-none"></div>
+                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+                         <div>
+                             <h4 class="text-base font-bold text-purple-400 flex items-center gap-2 mb-1"><i class="fa-solid fa-robot"></i> Trợ Lý Kỹ Thuật AI (Gemini)</h4>
+                             <p class="text-xs text-slate-300">Tạo bản kế hoạch hành động (Action Plan) chi tiết kèm mã giả Python để xử lý 3 rủi ro (P0, P1) trên.</p>
+                         </div>
+                         <button onclick="generateITPlan()" id="btn-ai-it" class="whitespace-nowrap px-4 py-2.5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-md shadow-purple-500/30 shrink-0">
+                             ✨ Yêu Cầu AI Lên Kế Hoạch Fix Code
+                         </button>
+                     </div>
+                     <div id="ai-it-result" class="hidden mt-4 pt-4 border-t border-slate-800 text-sm text-slate-300 ai-content"></div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- JS SCRIPTS -->
+    <script>
+        // === GEMINI API SETUP ===
+        const apiKey = "";
+        
+        async function callGeminiAPI(prompt, retries = 5) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }]
+            };
+
+            let delay = 1000;
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    return data.candidates?.[0]?.content?.parts?.[0]?.text || "Không có phản hồi từ AI.";
+                } catch (error) {
+                    if (i === retries - 1) throw error;
+                    await new Promise(res => setTimeout(res, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        // Feature 1: AI BOM Analysis
+        async function analyzeBOMWithAI() {
+            const btn = document.getElementById('btn-ai-bom');
+            const resultDiv = document.getElementById('ai-bom-result');
+            
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> AI đang phân tích dữ liệu...`;
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            resultDiv.classList.add('hidden');
+
+            // Lấy dữ liệu hiện tại từ State
+            const usageData = `Anh Nam mượn: ${state.inventory.nam.cnc} mũi CNC, ${state.inventory.nam.silicon} Súng Silicon. 
+                               Anh Bắc mượn: ${state.inventory.bac.cnc} mũi CNC, ${state.inventory.bac.silicon} Súng Silicon.
+                               Anh Hải mượn: ${state.inventory.hai.cnc} mũi CNC, ${state.inventory.hai.silicon} Súng Silicon.`;
+
+            const prompt = `Với vai trò là Chuyên gia Tối ưu hóa Kho xưởng, hãy xem xét dữ liệu mượn dụng cụ sau đây từ xưởng sản xuất POSM:
+            
+            ${usageData}
+            
+            Dựa trên dữ liệu ít ỏi này, hãy đưa ra một đề xuất định mức (BOM) hàng tuần cho từng loại vật tư (Mũi CNC, Súng Silicon). Giải thích ngắn gọn lý do đề xuất. Hãy trả về kết quả bằng mã HTML cơ bản (chỉ dùng thẻ <strong>, <ul>, <li>, <br>). Trả lời ngắn gọn, trực diện, không cần tiêu đề dư thừa. Không sử dụng dấu backticks markdown.`;
+
+            try {
+                const aiResponse = await callGeminiAPI(prompt);
+                resultDiv.innerHTML = aiResponse.replace(/```html|```/g, ''); // Clean up any markdown artifacts
+                resultDiv.classList.remove('hidden');
+            } catch (e) {
+                resultDiv.innerHTML = `<span class="text-rose-400"><i class="fa-solid fa-circle-exclamation"></i> Lỗi khi gọi AI: Vui lòng thử lại sau.</span>`;
+                resultDiv.classList.remove('hidden');
+            } finally {
+                btn.innerHTML = `✨ Đề Xuất Định Mức Bằng AI`;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        }
+
+        // Feature 2: AI IT Action Plan
+        async function generateITPlan() {
+            const btn = document.getElementById('btn-ai-it');
+            const resultDiv = document.getElementById('ai-it-result');
+            
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Đang sinh mã và kế hoạch...`;
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            resultDiv.classList.add('hidden');
+
+            const prompt = `Bạn là một Senior Python/DevOps Engineer đang hỗ trợ bàn giao hệ thống WMS (Kho). Hệ thống đang dùng Flask, Telegram Bot, và một file scanner_daemon.py chạy nền.
+            Có 3 lỗi cực kỳ quan trọng cần giải quyết:
+            1. (P0) Đường dẫn "C:\\Users\\KHO HEXA\\..." đang bị hardcode. Thư mục ảo .venv đang bị push lên Git.
+            2. (P1) Xung đột session: File scanner_daemon.py đang bị chạy chồng nhiều tiến trình (nhiều người click mở) gây loạn dữ liệu quét.
+            3. (P1) Thiếu cơ chế chống duplicate (Idempotency Key) ở hàm quyết toán chi phí treo (Hanging Cost Settlement), dẫn đến việc gửi double dữ liệu lên CRM.
+            
+            Hãy viết một Kế hoạch hành động (Action Plan) NGẮN GỌN kèm một số dòng mã giả Python (pseudo-code) hướng dẫn IT mới cách sửa 3 lỗi này.
+            QUAN TRỌNG: Hãy định dạng câu trả lời hoàn toàn bằng HTML thô (ví dụ: dùng thẻ <h4>, <ul>, <li>, <strong>, <pre><code>...</code></pre>). Tuyệt đối KHÔNG BỌC TOÀN BỘ trong markdown \`\`\`html.`;
+
+            try {
+                const aiResponse = await callGeminiAPI(prompt);
+                resultDiv.innerHTML = aiResponse.replace(/```html|```/g, '');
+                resultDiv.classList.remove('hidden');
+            } catch (e) {
+                resultDiv.innerHTML = `<span class="text-rose-400"><i class="fa-solid fa-circle-exclamation"></i> Lỗi kết nối AI: Vui lòng thử lại sau.</span>`;
+                resultDiv.classList.remove('hidden');
+            } finally {
+                btn.innerHTML = `✨ Yêu Cầu AI Lên Kế Hoạch Fix Code`;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        }
+
+        // TAB SWITCHING LOGIC
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => { tab.classList.add('hidden'); tab.classList.remove('block'); });
+            const activeTab = document.getElementById('tab-' + tabId);
+            if (activeTab) { activeTab.classList.remove('hidden'); activeTab.classList.add('block'); }
+            
+            document.querySelectorAll('.tab-btn').forEach(btn => { 
+                if(btn.id === 'btn-tab-it') {
+                    btn.className = "tab-btn whitespace-nowrap px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-blue-400 hover:text-blue-300 transition-all duration-200 relative overflow-hidden";
+                } else {
+                    btn.className = "tab-btn whitespace-nowrap px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-slate-400 hover:text-slate-200 transition-all duration-200";
+                }
+            });
+            
+            const activeBtn = document.getElementById('btn-tab-' + tabId);
+            if (activeBtn) {
+                if(tabId === 'it') {
+                    activeBtn.className = "tab-btn whitespace-nowrap px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg text-blue-400 bg-blue-500/10 border border-blue-500/20 transition-all duration-200 relative overflow-hidden shadow-lg shadow-blue-500/10";
+                } else {
+                    activeBtn.className = "tab-btn whitespace-nowrap px-4 py-2 text-xs sm:text-sm font-semibold rounded-lg bg-emerald-500 text-slate-950 shadow transition-all duration-200";
+                }
+            }
+        }
+
+        // ==================== TAB 1: PITCH DECK SLIDES ====================
+        const slides = [
+            {
+                title: "Vấn Đề Thực Trạng Tại Xưởng",
+                subtitle: "Tổn Thất Ẩn Về Chi Phí & Năng Suất Lao Động",
+                items: [
+                    "<strong>Quản lý cấp phát tự do:</strong> Thợ tự ý lấy đồ, ghi chép sổ sách thủ công dễ sai lệch.",
+                    "<strong>Mất kiểm soát mũi cũ gãy/hỏng:</strong> Vứt bừa bãi ra sàn, gây mất vệ sinh 5S và lãng phí phế liệu hợp kim.",
+                    "<strong>Mất kiểm soát nhân lực tại xưởng rộng:</strong> Xưởng POSM rộng lớn, thợ đi la cà khó kiểm soát thời gian chết."
+                ],
+                visual: `<div class="bg-rose-500/10 border border-rose-500/20 rounded-2xl p-5 flex flex-col gap-3"><h4 class="text-xs font-bold uppercase tracking-wider text-rose-400"><i class="fa-solid fa-triangle-exclamation mr-1.5"></i>Tổn thất môi trường</h4><p class="text-xs text-slate-400">Mất vệ sinh 5S và an toàn lao động do mũi cắt bén nhọn rơi vãi tự do.</p></div>`
+            },
+            {
+                title: "Bố Trí Kệ POUS Đột Phá",
+                subtitle: "Trình Tự Thao Tác Tự Nhiên, Khép Kín",
+                items: [
+                    "<strong>Kệ 3 khu vực vật lý:</strong> Máy F18 (TRÁI), Máy quét RFID (PHẢI), và Rổ thu hồi (GIỮA).",
+                    "<strong>Đúng luồng tự nhiên:</strong> Lấy hàng ở giữa $\\rightarrow$ Chạm hàng bên PHẢI $\\rightarrow$ Quẹt thẻ xác nhận bên TRÁI $\\rightarrow$ Thả vỏ rỗng.",
+                    "<strong>Kiểm soát tuyệt đối:</strong> Buộc thợ phải xác thực danh tính bước cuối trước khi rời đi."
+                ],
+                visual: `<div class="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-5 flex flex-col gap-3"><h4 class="text-xs font-bold uppercase tracking-wider text-emerald-400"><i class="fa-solid fa-route mr-1.5"></i>Luồng thao tác vật lý</h4><p class="text-xs text-slate-400">Phân tách đầu đọc bên phải và F18 bên trái tối thiểu 1.5m để thợ không bị nhầm lẫn.</p></div>`
+            },
+            {
+                title: "Giải Pháp Mũi Cũ: Hộp 2 Ngăn & Kẹp Bướm",
+                subtitle: "Tạo Thói Quen Sạch Sẽ Tự Nhiên",
+                items: [
+                    "<strong>Hộp nhựa dẹt 2 ngăn:</strong> Ngăn XANH (Mới), ngăn ĐỎ ghi 'CHỖ ĐỂ MŨI CŨ' (để trống).",
+                    "<strong>Ép thói quen:</strong> Thợ bắt buộc cắm mũi cũ vào ngăn ĐỎ để rảnh tay thao tác.",
+                    "<strong>Kẹp Bướm Sắt RFID:</strong> Bấm kẹp RFID vào đuôi súng silicon, rút súng nhả kẹp siêu tốc."
+                ],
+                visual: `<div class="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-5 flex flex-col gap-3"><h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider"><i class="fa-solid fa-boxes-packing mr-1.5"></i>Tái sử dụng 100%</h4><p class="text-xs text-slate-400">Vỏ hộp dán tem RFID và Kẹp Bướm tuần hoàn vô tận qua quy trình Milk Run.</p></div>`
+            },
+            {
+                title: "Phase 0: Tủ Locker & Bản Sao Số",
+                subtitle: "Giải Pháp Mồi Bằng Khóa Từ Cũ",
+                items: [
+                    "<strong>Tận dụng khóa từ:</strong> Đóng tủ locker cá nhân bằng khóa từ cũ để tiết kiệm chi phí.",
+                    "<strong>Thói quen mang thẻ:</strong> Ép thợ mang thẻ RFID để mở cất điện thoại, đồ giá trị.",
+                    "<strong>Bản Sao Số (Digital Twin):</strong> Quẹt thẻ mở tủ/kệ sẽ cập nhật vị trí thợ Real-time trên màn hình giám sát."
+                ],
+                visual: `<div class="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-5 flex flex-col gap-3"><h4 class="text-xs font-bold uppercase tracking-wider text-blue-400"><i class="fa-solid fa-users-viewfinder mr-1.5"></i>Số hóa nhân sự</h4><p class="text-xs text-slate-400">Thay thế cách quản lý la cà bằng hệ thống định vị nhân sự kỹ thuật số thời gian thực.</p></div>`
+            },
+            {
+                title: "Milk Run & Bàn Quét Kho Tổng",
+                subtitle: "Đối Soát Hàng Loạt Chống Ùn Tắc",
+                items: [
+                    "<strong>Thu gom thụ động:</strong> Tạp vụ gom rổ rỗng mang về kho, không cần xài phần mềm.",
+                    "<strong>Đổ ụp quét RFID:</strong> Thủ kho đổ ụp toàn bộ rổ lên Bàn RFID. Quét 30 hộp trong 2 giây.",
+                    "<strong>Tự động gạch nợ:</strong> Thuật toán tự tìm đúng tên thợ để giải phóng nợ cho ca sau."
+                ],
+                visual: `<div class="bg-sky-500/10 border border-sky-500/20 rounded-2xl p-5 flex flex-col gap-3"><h4 class="text-xs font-bold uppercase tracking-wider text-sky-400"><i class="fa-solid fa-server mr-1.5"></i>Milk Run</h4><p class="text-xs text-slate-400">Tận dụng sức người tạp vụ + Máy quét tốc độ cao kho tổng, tiết kiệm thay vì mua AGV.</p></div>`
+            }
+        ];
+
+        let currentSlideIdx = 0;
+        function renderSlide() {
+            const slide = slides[currentSlideIdx];
+            const contentDiv = document.getElementById('slide-content');
+            if(!contentDiv) return;
+            
+            const itemsHtml = slide.items.map(item => `
+                <li class="flex items-start gap-3">
+                    <span class="h-5 w-5 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xs mt-0.5 border border-emerald-500/20 shrink-0"><i class="fa-solid fa-check"></i></span>
+                    <span class="text-sm sm:text-base text-slate-300 leading-relaxed">${item}</span>
+                </li>
+            `).join('');
+
+            contentDiv.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center font-sans">
+                    <div class="md:col-span-8 flex flex-col gap-4">
+                        <span class="text-xs sm:text-sm font-bold uppercase tracking-widest text-emerald-400">${slide.subtitle}</span>
+                        <h3 class="text-2xl sm:text-3xl font-black text-white leading-tight">${slide.title}</h3>
+                        <ul class="flex flex-col gap-4 mt-2">${itemsHtml}</ul>
+                    </div>
+                    <div class="md:col-span-4">${slide.visual}</div>
+                </div>
+            `;
+            const slideIndicator = document.getElementById('slide-indicator');
+            if(slideIndicator) slideIndicator.innerText = `Slide ${currentSlideIdx + 1}/${slides.length}`;
+        }
+        function nextSlide() { if (currentSlideIdx < slides.length - 1) { currentSlideIdx++; renderSlide(); } }
+        function prevSlide() { if (currentSlideIdx > 0) { currentSlideIdx--; renderSlide(); } }
+        renderSlide();
+
+        // ==================== TAB 2: SIMULATOR LOGIC ====================
+        const state = {
+            bomMode: 'collect',
+            activeWorker: null,
+            activeItem: null,
+            habitRate: 33,
+            lockers: { nam: true, bac: true, hai: true },
+            inventory: { nam: { silicon: 1, cnc: 0 }, bac: { silicon: 0, cnc: 0 }, hai: { silicon: 0, cnc: 0 } },
+            basket: [],
+            telegrams: [],
+            physicalFlowStep: 0,
+            lastDispensedBox: null
+        };
+        const workers = {
+            nam: { name: "Anh Nam", group: "CNC", location: "Cụm máy CNC" },
+            bac: { name: "Anh Bắc", group: "Lắp ráp POSM", location: "Khu lắp ráp" },
+            hai: { name: "Anh Hải", group: "Phòng Sơn", location: "Phòng phun sơn" }
+        };
+        const items = { cnc: { name: "Mũi CNC 6mm" }, silicon: { name: "Súng Silicon" } };
+
+        function setBomMode(mode) {
+            state.bomMode = mode;
+            const btnC = document.getElementById('btn-mode-collect');
+            const btnS = document.getElementById('btn-mode-strict');
+            const badge = document.getElementById('system-mode-badge');
+            
+            if (mode === 'collect') {
+                if(btnC) btnC.className = "flex-1 md:flex-none px-4 py-2 text-xs font-bold rounded-lg bg-amber-500 text-slate-950 transition-all duration-200";
+                if(btnS) btnS.className = "flex-1 md:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-400 hover:text-slate-200 transition-all duration-200";
+                if(badge) { badge.innerText = "GOM DỮ LIỆU"; badge.className = "text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2 py-1 rounded-full font-bold animate-pulse hidden sm:inline-block"; }
+                pushTelegramAlert(`⚙️ Đã chuyển sang chế độ <b>GOM DỮ LIỆU BOM</b>.`);
+            } else {
+                if(btnC) btnC.className = "flex-1 md:flex-none px-4 py-2 text-xs font-bold rounded-lg text-slate-400 hover:text-slate-200 transition-all duration-200";
+                if(btnS) btnS.className = "flex-1 md:flex-none px-4 py-2 text-xs font-bold rounded-lg bg-emerald-500 text-slate-950 transition-all duration-200";
+                if(badge) { badge.innerText = "CHỐT CHẶN CỨNG"; badge.className = "text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-1 rounded-full font-bold hidden sm:inline-block"; }
+                pushTelegramAlert(`⚙️ Đã kích hoạt <b>CHỐT CHẶN CỨNG</b>.`);
+            }
+        }
+
+        function interactLocker(id) {
+            state.lockers[id] = !state.lockers[id];
+            const lBox = document.getElementById('locker-box-' + id);
+            const lIcon = document.getElementById('locker-status-icon-' + id);
+            beep(state.lockers[id] ? 500 : 900, 150);
+
+            let unlockedCount = 0;
+            if (!state.lockers.nam) unlockedCount++;
+            if (!state.lockers.bac) unlockedCount++;
+            if (!state.lockers.hai) unlockedCount++;
+            state.habitRate = Math.round(((unlockedCount + 1) / 4) * 100);
+            
+            if (document.getElementById('habit-rate')) document.getElementById('habit-rate').innerText = state.habitRate + "%";
+
+            if (state.lockers[id]) {
+                if(lBox) lBox.className = "border border-slate-800 rounded-2xl p-4 bg-slate-950/50 flex flex-col items-center justify-between gap-3 text-center transition-all duration-300";
+                if(lIcon) lIcon.innerHTML = `<i class="fa-solid fa-lock text-slate-600"></i>`;
+                updateTwinState(id, false);
+            } else {
+                if(lBox) lBox.className = "border border-emerald-500/30 rounded-2xl p-4 bg-emerald-950/10 flex flex-col items-center justify-between gap-3 text-center transition-all duration-300 shadow-lg shadow-emerald-500/5";
+                if(lIcon) lIcon.innerHTML = `<i class="fa-solid fa-lock-open text-emerald-400"></i>`;
+                pushTelegramAlert(`🔑 <b>[LOCKER]</b> ${workers[id].name} vừa mở khóa.`);
+                updateTwinState(id, true);
+            }
+        }
+
+        function updateTwinState(id, active) {
+            const dot = document.getElementById('twin-dot-' + id);
+            const time = document.getElementById('twin-time-' + id);
+            const loc = document.getElementById('twin-loc-' + id);
+            const now = new Date().toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit'});
+
+            if (active) {
+                if(dot) dot.className = "h-2 w-2 rounded-full bg-emerald-500 pulse-active";
+                if(time) { time.innerText = `Online`; time.className = "text-[9px] text-emerald-400"; }
+                if(loc) { loc.innerText = workers[id].location; loc.className = "text-[9px] font-bold text-emerald-400"; }
+            } else {
+                if(dot) dot.className = "h-2 w-2 rounded-full bg-slate-600";
+                if(time) { time.innerText = `Offline`; time.className = "text-[9px] text-slate-500"; }
+                if(loc) { loc.innerText = "Chưa xác định"; loc.className = "text-[9px] font-bold text-slate-500"; }
+            }
+        }
+
+        function clickSelectItem(id) {
+            state.activeItem = id;
+            state.physicalFlowStep = 1;
+            document.querySelectorAll("[id^='shelf-item-']").forEach(btn => {
+                btn.className = "flex flex-col p-2 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 transition text-left relative overflow-hidden";
+            });
+            const sItem = document.getElementById('shelf-item-' + id);
+            if(sItem) sItem.className = "flex flex-col p-2 rounded-xl border border-amber-500 bg-amber-950/20 transition text-left relative overflow-hidden shadow-inner shadow-amber-500/10";
+
+            const tBtn = document.getElementById('shelf-btn-tap');
+            if(tBtn) {
+                tBtn.disabled = false;
+                tBtn.className = "w-full py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 rounded-lg text-[10px] font-bold transition cursor-pointer";
+                tBtn.innerText = "Chạm sang MÁY QUÉT (PHẢI)";
+            }
+            beep(700, 80);
+        }
+
+        function clickTapMaterial() {
+            if (state.physicalFlowStep !== 1) return;
+            state.physicalFlowStep = 2;
+            beep(1000, 100);
+
+            const tBtn = document.getElementById('shelf-btn-tap');
+            if(tBtn) {
+                tBtn.disabled = true;
+                tBtn.className = "w-full py-1.5 bg-emerald-500/20 text-emerald-400 border border-emerald-500/20 rounded-lg text-[10px] font-bold transition cursor-not-allowed";
+                tBtn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Đã quét RFID`;
+            }
+            if(document.getElementById('rfid-scan-icon')) document.getElementById('rfid-scan-icon').className = "fa-solid fa-wifi text-lg animate-pulse";
+            if(document.getElementById('rfid-status-text')) {
+                document.getElementById('rfid-status-text').innerText = "Chờ định danh nhân sự...";
+                document.getElementById('rfid-status-text').className = "text-[9px] text-amber-400 font-bold";
+            }
+            if(document.getElementById('step-f18-indicator')) {
+                document.getElementById('step-f18-indicator').className = "w-full bg-blue-500/20 p-1.5 rounded-lg border border-blue-500/30 text-[9px] text-blue-400 font-bold text-center animate-pulse";
+                document.getElementById('step-f18-indicator').innerHTML = `BƯỚC 3: QUẸT F18 (TRÁI)`;
+            }
+        }
+
+        function clickF18Swipe(id) {
+            updateTwinState(id, true);
+            if (state.physicalFlowStep === 2) {
+                state.activeWorker = id;
+                state.physicalFlowStep = 3;
+                beep(800, 100);
+                if (document.getElementById('step-f18-indicator')) {
+                    document.getElementById('step-f18-indicator').className = "w-full bg-emerald-500/10 p-1.5 rounded-lg border border-emerald-500/20 text-[9px] text-emerald-400 font-bold text-center";
+                    document.getElementById('step-f18-indicator').innerHTML = `F18 OK: ${workers[id].name}`;
+                }
+                processDispense();
+            }
+        }
+
+        function processDispense() {
+            const wId = state.activeWorker;
+            const iId = state.activeItem;
+            
+            if (state.bomMode === 'strict' && iId === 'silicon' && state.inventory[wId].silicon >= 1) {
+                beep(200, 150); setTimeout(() => beep(200, 150), 200);
+                if (document.getElementById('rfid-scan-icon')) document.getElementById('rfid-scan-icon').className = "fa-solid fa-circle-xmark text-lg text-rose-500";
+                if (document.getElementById('rfid-status-text')) {
+                    document.getElementById('rfid-status-text').innerText = "TỪ CHỐI CẤP PHÁT";
+                    document.getElementById('rfid-status-text').className = "text-[9px] text-rose-500 font-bold";
+                }
+                pushTelegramAlert(`🚨 <b>VI PHẠM:</b> ${workers[wId].name} lấy lố định mức. Hệ thống KHÓA.`);
+                setTimeout(() => resetFlow(), 2000);
+            } else {
+                state.physicalFlowStep = 4;
+                state.inventory[wId][iId]++;
+                updateBadges();
+
+                if (document.getElementById('rfid-status-text')) {
+                    document.getElementById('rfid-status-text').innerText = "CẤP PHÁT OK";
+                    document.getElementById('rfid-status-text').className = "text-[9px] text-emerald-400 font-bold";
+                }
+
+                const dropBtn = document.getElementById('shelf-btn-drop');
+                if (dropBtn) {
+                    dropBtn.disabled = false;
+                    dropBtn.className = "w-full py-1.5 bg-rose-500 hover:bg-rose-400 text-slate-950 rounded-lg text-[10px] font-bold transition cursor-pointer shadow-lg animate-bounce";
+                    dropBtn.innerText = "BƯỚC 4: THẢ VỎ VÀO RỔ";
+                }
+                pushTelegramAlert(`✅ <b>CẤP PHÁT:</b> ${workers[wId].name} lấy ${items[iId].name}.`);
+                state.lastDispensedBox = { workerId: wId, itemId: iId };
+            }
+        }
+
+        function clickDropBasket() {
+            if (state.physicalFlowStep !== 4 || !state.lastDispensedBox) return;
+            state.basket.push(state.lastDispensedBox);
+            state.lastDispensedBox = null;
+            beep(600, 150);
+
+            if (document.getElementById('shelf-basket-content')) {
+                document.getElementById('shelf-basket-content').innerHTML = state.basket.map(b => 
+                    `<span class="text-[8px] bg-slate-800 text-slate-300 px-1.5 py-0.5 rounded border border-slate-700 flex items-center gap-1 animate-fadeIn"><i class="fa-solid ${b.itemId === 'silicon' ? 'fa-paperclip text-pink-400' : 'fa-box text-amber-400'}"></i> Rỗng</span>`
+                ).join('');
+            }
+
+            if (document.getElementById('basket-count-badge')) document.getElementById('basket-count-badge').innerText = state.basket.length + " vỏ";
+            if (document.getElementById('milkrun-count')) document.getElementById('milkrun-count').innerText = state.basket.length;
+
+            const btnMR = document.getElementById('btn-milk-run');
+            if (btnMR) {
+                btnMR.disabled = false;
+                btnMR.className = "w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 rounded-xl font-bold text-xs transition cursor-pointer flex items-center justify-center gap-2 animate-pulse";
+            }
+            pushTelegramAlert(`🗑️ <b>[5S XƯỞNG]</b> Đã thả rỗng vào rổ.`);
+            resetFlow();
+        }
+
+        function resetFlow() {
+            state.physicalFlowStep = 0;
+            state.activeItem = null;
+            state.activeWorker = null;
+            document.querySelectorAll("[id^='shelf-item-']").forEach(btn => btn.className = "flex flex-col p-2 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 transition text-left relative overflow-hidden");
+            if (document.getElementById('shelf-btn-tap')) {
+                document.getElementById('shelf-btn-tap').disabled = true;
+                document.getElementById('shelf-btn-tap').className = "w-full py-1.5 bg-slate-800 text-slate-500 rounded-lg text-[10px] font-bold transition cursor-not-allowed";
+                document.getElementById('shelf-btn-tap').innerText = "Chạm RFID";
+            }
+            if (document.getElementById('step-f18-indicator')) {
+                document.getElementById('step-f18-indicator').className = "w-full bg-slate-950 py-1.5 px-1 rounded-lg border border-slate-800 text-[9px] text-center";
+                document.getElementById('step-f18-indicator').innerHTML = `<span class="text-slate-500 italic">Chờ chạm vật tư...</span>`;
+            }
+            if (document.getElementById('shelf-btn-drop')) {
+                document.getElementById('shelf-btn-drop').disabled = true;
+                document.getElementById('shelf-btn-drop').className = "w-full py-1.5 bg-slate-800 text-slate-500 rounded-lg text-[10px] font-bold transition cursor-not-allowed";
+                document.getElementById('shelf-btn-drop').innerText = "Thả Vỏ Cũ Vào Rổ";
+            }
+            if (document.getElementById('rfid-scan-icon')) document.getElementById('rfid-scan-icon').className = "fa-solid fa-scanner-image text-lg";
+            if (document.getElementById('rfid-status-text')) {
+                document.getElementById('rfid-status-text').innerText = "Đợi lấy hàng...";
+                document.getElementById('rfid-status-text').className = "text-[9px] text-slate-500";
+            }
+        }
+
+        function runBulkMilkRun() {
+            if (state.basket.length === 0) return;
+            const sf = document.getElementById('bulk-scanner-surface');
+            if (sf) {
+                sf.innerHTML = `<div class="animate-scan"></div>`;
+                state.basket.forEach((box, i) => {
+                    setTimeout(() => {
+                        const el = document.createElement('div');
+                        el.className = "h-6 px-1.5 bg-slate-800 border border-sky-500/50 rounded flex items-center gap-1 text-[8px] font-bold text-sky-300";
+                        el.innerHTML = `<i class="fa-solid fa-microchip"></i> UID:${box.workerId}`;
+                        sf.appendChild(el);
+                        beep(1500, 30);
+                    }, i * 200);
+                });
+            }
+
+            setTimeout(() => {
+                state.basket.forEach(box => { if (state.inventory[box.workerId][box.itemId] > 0) state.inventory[box.workerId][box.itemId]--; });
+                pushTelegramAlert(`🧹 <b>[MILK RUN]</b> Quét thành công <b>${state.basket.length}</b> hộp rỗng. Đã xóa nợ.`);
+                state.basket = [];
+                if (document.getElementById('shelf-basket-content')) document.getElementById('shelf-basket-content').innerHTML = `<p class="text-[9px] text-slate-500 italic">Thả lại vỏ cũ vào đây.</p>`;
+                if (document.getElementById('basket-count-badge')) document.getElementById('basket-count-badge').innerText = "0 vỏ";
+                if (document.getElementById('milkrun-count')) document.getElementById('milkrun-count').innerText = 0;
+                updateBadges();
+
+                if (document.getElementById('btn-milk-run')) {
+                    document.getElementById('btn-milk-run').disabled = true;
+                    document.getElementById('btn-milk-run').className = "w-full py-2.5 bg-slate-800 text-slate-500 rounded-xl font-bold text-xs transition cursor-not-allowed flex items-center justify-center gap-2";
+                }
+                if (sf) sf.innerHTML = `<span class="text-[10px] text-emerald-500/80 font-bold uppercase"><i class="fa-solid fa-check"></i> ĐÃ XÓA NỢ THÀNH CÔNG</span>`;
+                beep(500, 400);
+            }, state.basket.length * 200 + 500);
+        }
+
+        function updateBadges() {
+            ['nam', 'bac', 'hai'].forEach(id => {
+                const inv = state.inventory[id];
+                const p = [];
+                if (inv.silicon > 0) p.push(`${inv.silicon} Súng`);
+                if (inv.cnc > 0) p.push(`${inv.cnc} CNC`);
+                const b = document.querySelector(`.badge-${id}`);
+                if (b) {
+                    if (p.length > 0) { b.innerText = `Nợ: ${p.join(',')}`; b.className = `badge-${id} text-[9px] text-amber-500`; }
+                    else { b.innerText = `Nợ: 0`; b.className = `badge-${id} text-[9px] text-emerald-500`; }
+                }
+            });
+        }
+
+        function triggerDailyReport() {
+            beep(900, 100); setTimeout(() => beep(1200, 150), 150);
+            
+            // Push message 1: Tool check
+            pushTelegramAlert(`✅ <b>Hiện chưa có dụng cụ quá hạn hoặc đến kỳ kiểm tra giữ.</b><br><br>
+📋 <b>Máy/công cụ mượn qua F18 đến kỳ cần kiểm tra:</b><br>
+- Tuấn logo: MHUTBUI20 | máy hút bụi pin total 01 | mở 29 ngày | chu kỳ check 7 ngày | làm: kiểm tra còn giữ`);
+            
+            // Push message 2: Daily Ops Report
+            setTimeout(() => {
+                beep(900, 100); setTimeout(() => beep(1200, 150), 150);
+                pushTelegramAlert(`📋 <b>Báo cáo vận hành đầu ngày</b><br><br>
+🚨 <b>Mục cần ưu tiên hôm nay:</b><br>
+🔴 TEMP KHO-070526-102719: mẫu vietcombank 7/5 | treo 27 ngày | làm: gắn CRM ngay<br>
+🔴 STOCK DANG225M: tồn -4720 / min 44 | làm: chốt bù ngay<br>
+🔴 STOCK BKEOTRON: tồn -1857 / min 13 | làm: chốt bù ngay<br><br>
+📌 <b>Công trình tạm chờ gắn mã CRM:</b><br>
+🔴 KHO-070526-102719: làm mẫu cho vietcombank<br>
+🔴 KHO-060526-104216: vách AC 1m2 Pana<br>
+🔴 KHO-030526-212451: 2 Bàn AT cửa kính lưu kho<br>
+<i>Cú pháp: /gan_ma_crm &lt;TEMP_CODE&gt; &lt;CRM_CODE&gt;</i><br><br>
+📦 <b>Mã chạm điểm đặt hàng:</b><br>
+🔴 DANG225M: Dây nguồn Daphaco 2x2.5 | tồn -4720 | min 44<br>
+🔴 DECALDEN: Decal đen nhám khổ 1.2m | tồn -486 | min 4<br>
+🟡 DA25CDVM: Dây điện 2.5 CADIVI | tồn 680 | min 763`);
+            }, 800);
+        }
+
+        function pushTelegramAlert(msg) {
+            state.telegrams.unshift({ time: new Date().toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit', second:'2-digit'}), msg: msg });
+            if (document.getElementById('telegram-feed')) {
+                document.getElementById('telegram-feed').innerHTML = state.telegrams.map(t => `
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-2.5 flex flex-col gap-1 animate-fadeIn">
+                        <span class="text-[8px] text-slate-500 font-mono">${t.time}</span><p class="text-slate-300 text-[10px]">${t.msg}</p>
+                    </div>`).join('');
+            }
+        }
+
+        let audioCtx = null;
+        function beep(freq, duration) {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration/1000);
+            osc.start(); osc.stop(audioCtx.currentTime + duration/1000);
+        }
+
+        // ==================== TAB 3: ROI CALCULATOR ====================
+        function updateRoi() {
+            const wC = parseInt(document.getElementById('input-workers')?.value || 30);
+            const hR = parseInt(document.getElementById('input-wage')?.value || 45000);
+            const wM = parseInt(document.getElementById('input-walk')?.value || 15);
+            const iM = parseInt(document.getElementById('input-idle')?.value || 20);
+            const wCost = parseInt(document.getElementById('input-waste-cost')?.value || 30000000);
+
+            if(document.getElementById('val-workers')) document.getElementById('val-workers').innerText = wC + " Người";
+            if(document.getElementById('val-wage')) document.getElementById('val-wage').innerText = hR.toLocaleString('vi-VN') + "đ";
+            if(document.getElementById('val-walk')) document.getElementById('val-walk').innerText = wM + " Phút";
+            if(document.getElementById('val-idle')) document.getElementById('val-idle').innerText = iM + " Phút";
+            if(document.getElementById('val-waste-cost')) document.getElementById('val-waste-cost').innerText = wCost.toLocaleString('vi-VN') + "đ";
+
+            const lS = (wM / 60) * 2 * wC * 26 * hR;
+            const iS = (iM / 60) * 0.5 * wC * 26 * hR;
+            const mS = wCost * 0.25;
+            const jT = 2000000;
+            const tS = lS + iS + mS - jT;
+            const pb = 9000000 / tS;
+
+            if(document.getElementById('res-labor-savings')) document.getElementById('res-labor-savings').innerText = Math.round(lS).toLocaleString('vi-VN') + "đ";
+            if(document.getElementById('res-idle-savings')) document.getElementById('res-idle-savings').innerText = Math.round(iS).toLocaleString('vi-VN') + "đ";
+            if(document.getElementById('res-tool-savings')) document.getElementById('res-tool-savings').innerText = Math.round(mS).toLocaleString('vi-VN') + "đ";
+            if(document.getElementById('res-total-savings')) document.getElementById('res-total-savings').innerText = Math.round(tS).toLocaleString('vi-VN') + "đ";
+            if(document.getElementById('res-payback')) document.getElementById('res-payback').innerText = pb > 0 ? pb.toFixed(1) : "N/A";
+        }
+        updateRoi();
+        
+        // Initial init
+        switchTab('pitch');
+    </script>
+</body>
+</html>
